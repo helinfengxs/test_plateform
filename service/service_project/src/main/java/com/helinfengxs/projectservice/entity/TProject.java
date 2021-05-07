@@ -46,7 +46,7 @@ public class TProject implements Serializable {
 
     @ApiModelProperty(value = "是否删除，0未删除，1删除")
     @TableLogic
-    private Integer staus;
+    private Integer status;
     @ApiModelProperty(value = "备注信息")
     private String describtion;
 
