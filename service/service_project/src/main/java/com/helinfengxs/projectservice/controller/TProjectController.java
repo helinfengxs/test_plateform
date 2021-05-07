@@ -5,6 +5,7 @@ import com.helinfengxs.projectservice.entity.TProject;
 import com.helinfengxs.projectservice.service.TProjectService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +35,7 @@ public class TProjectController {
     }
     @DeleteMapping("{id}")
     @ApiOperation(value = "根据项目Id删除项目")
-    public boolean removeId(@PathVariable String id){
+    public boolean removeId(@ApiParam(name = "id",value = "项目管理id",required = true) @PathVariable String id){
         boolean status = tProjectService.removeById(id);
         return status;
     }
