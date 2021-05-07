@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.websocket.server.PathParam;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -138,7 +139,7 @@ public class TProjectController {
     /**
      * 添加项目
      * @param tProject 项目实体类
-     * @return 添加成功与失败信息
+     * @return 添加成功或失败信息
      */
     @ApiOperation("添加项目接口")
     @PostMapping("addProject")
@@ -148,6 +149,33 @@ public class TProjectController {
             return  R.error().message("添加失败");
         }
         return R.ok().message("添加成功");
+    }
+
+    /**
+     * 根据项目id查询项目信息
+     * @param id 项目id
+     * @return 项目信息
+     */
+    @ApiOperation("根据项目id查询项目信息")
+    @GetMapping("getProject/{id}")
+    public R getProjectById(@ApiParam(name = "id",value = "项目id",required = true) @PathVariable String id){
+        TProject byId = tProjectService.getById(id);
+        return R.ok().data("item",byId);
+    }
+
+    /**
+     * 更新项目信息
+     * @param tProject 项目实体类
+     * @return 添加成功或失败
+     */
+    @ApiOperation("更新项目信息")
+    @PostMapping("updateProject")
+    public R updateProject(@RequestBody TProject tProject){
+        boolean flag = tProjectService.updateById(tProject);
+        if(!flag){
+            return  R.error().message("更新失败");
+        }
+        return R.ok().message("更新成功");
     }
 }
 
