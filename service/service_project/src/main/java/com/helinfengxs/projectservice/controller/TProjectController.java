@@ -159,6 +159,7 @@ public class TProjectController {
     @ApiOperation("根据项目id查询项目信息")
     @GetMapping("getProject/{id}")
     public R getProjectById(@ApiParam(name = "id",value = "项目id",required = true) @PathVariable String id){
+
         TProject byId = tProjectService.getById(id);
         return R.ok().data("item",byId);
     }
