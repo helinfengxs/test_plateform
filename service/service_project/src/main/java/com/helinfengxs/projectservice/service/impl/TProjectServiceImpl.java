@@ -1,8 +1,8 @@
-package com.helinfenxs.projectservice.service.impl;
+package com.helinfengxs.projectservice.service.impl;
 
-import com.helinfenxs.projectservice.entity.TProject;
-import com.helinfenxs.projectservice.mapper.TProjectMapper;
-import com.helinfenxs.projectservice.service.TProjectService;
+import com.helinfengxs.projectservice.entity.TProject;
+import com.helinfengxs.projectservice.mapper.TProjectMapper;
+import com.helinfengxs.projectservice.service.TProjectService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 

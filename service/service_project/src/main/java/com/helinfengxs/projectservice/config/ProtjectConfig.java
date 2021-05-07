@@ -1,4 +1,4 @@
-package com.helinfenxs.projectservice.config;
+package com.helinfengxs.projectservice.config;
 
 
 import com.baomidou.mybatisplus.core.injector.ISqlInjector;
@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@MapperScan("com.helinfenxs.projectservice.mapper")
+@MapperScan("com.helinfengxs.projectservice.mapper")
 public class ProtjectConfig {
     /**
      * 逻辑删除插件

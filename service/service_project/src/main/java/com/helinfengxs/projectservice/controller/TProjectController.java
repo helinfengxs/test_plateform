@@ -1,8 +1,10 @@
-package com.helinfenxs.projectservice.controller;
+package com.helinfengxs.projectservice.controller;
 
 
-import com.helinfenxs.projectservice.entity.TProject;
-import com.helinfenxs.projectservice.service.TProjectService;
+import com.helinfengxs.projectservice.entity.TProject;
+import com.helinfengxs.projectservice.service.TProjectService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,17 +20,20 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/projectservice/")
+@Api(description = "项目管理")
 public class TProjectController {
 
     @Autowired
     private TProjectService tProjectService;
 
     @GetMapping("findAll")
+    @ApiOperation(value = "查询所有项目列表")
     public List<TProject> findAll(){
         List<TProject> list = tProjectService.list(null);
         return list;
     }
     @DeleteMapping("{id}")
+    @ApiOperation(value = "根据项目Id删除项目")
     public boolean removeId(@PathVariable String id){
         boolean status = tProjectService.removeById(id);
         return status;

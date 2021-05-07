@@ -1,6 +1,6 @@
-package com.helinfenxs.projectservice.service;
+package com.helinfengxs.projectservice.service;
 
-import com.helinfenxs.projectservice.entity.TProject;
+import com.helinfengxs.projectservice.entity.TProject;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

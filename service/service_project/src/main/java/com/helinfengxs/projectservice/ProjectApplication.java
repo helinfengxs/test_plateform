@@ -1,4 +1,4 @@
-package com.helinfenxs.projectservice;
+package com.helinfengxs.projectservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

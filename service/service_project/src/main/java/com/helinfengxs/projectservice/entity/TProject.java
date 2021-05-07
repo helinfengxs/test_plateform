@@ -1,4 +1,4 @@
-package com.helinfenxs.projectservice.entity;
+package com.helinfengxs.projectservice.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;

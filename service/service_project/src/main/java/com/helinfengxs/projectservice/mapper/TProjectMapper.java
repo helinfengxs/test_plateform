@@ -1,6 +1,6 @@
-package com.helinfenxs.projectservice.mapper;
+package com.helinfengxs.projectservice.mapper;
 
-import com.helinfenxs.projectservice.entity.TProject;
+import com.helinfengxs.projectservice.entity.TProject;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
