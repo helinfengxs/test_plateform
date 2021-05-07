@@ -1,6 +1,7 @@
 package com.helinfengxs.projectservice.controller;
 
 
+import com.helinfengxs.commonutils.R;
 import com.helinfengxs.projectservice.entity.TProject;
 import com.helinfengxs.projectservice.service.TProjectService;
 import io.swagger.annotations.Api;
@@ -27,17 +28,25 @@ public class TProjectController {
     @Autowired
     private TProjectService tProjectService;
 
+    /**
+     * 查询所有项目信息
+     * @return 返回项目列表信息
+     */
     @GetMapping("findAll")
     @ApiOperation(value = "查询所有项目列表")
-    public List<TProject> findAll(){
+    public R findAll(){
         List<TProject> list = tProjectService.list(null);
-        return list;
+        return R.ok().data("items",list);
     }
+
     @DeleteMapping("{id}")
     @ApiOperation(value = "根据项目Id删除项目")
-    public boolean removeId(@ApiParam(name = "id",value = "项目管理id",required = true) @PathVariable String id){
-        boolean status = tProjectService.removeById(id);
-        return status;
+    public R removeId(@ApiParam(name = "id",value = "项目管理id",required = true) @PathVariable String id){
+        boolean flag = tProjectService.removeById(id);
+        if (!flag){
+            return R.error();
+        }
+        return R.ok();
     }
 }
 
