@@ -1,17 +1,19 @@
 package com.helinfengxs.projectservice.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.helinfengxs.commonutils.R;
 import com.helinfengxs.projectservice.entity.TProject;
 import com.helinfengxs.projectservice.service.TProjectService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import com.helinfengxs.projectservice.vo.ProjectQUery;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -82,5 +84,55 @@ public class TProjectController {
         return R.ok().data("total",total).data("current",cut).data("pages",pages).data("rows",records);
 
 
-    }}
+    }
+
+    /**
+     * 条件组合分页查询项目信息
+     * @param current 当前页
+     * @param limit 当前页面展示数
+     * @param projectQUery 条件查询对象
+     * @return 条件组合分页项目信息
+     */
+    @ApiOperation("条件组合分页查询项目信息接口")
+    @PostMapping("pageProjectCondition/{current}/{limit}")
+    public R pageProjectCondition(
+            @ApiParam(name = "current",value = "当前页",required = true,defaultValue = "1")
+            @PathVariable long current,
+            @ApiParam(name = "limit",value = "当前页展示数",required = true,defaultValue = "5")
+            @PathVariable long limit,
+                @ApiParam(value = "组合条件查询对象",examples = @Example({
+                        @ExampleProperty(
+                                value = "{'title':'haha','testType':'1',‘begin’:'2021-05-01','end':'2021-05-08'}",
+                                mediaType = "application/json")
+                }))
+            @RequestBody(required = false) ProjectQUery projectQUery
+    ){
+        Page<TProject> page = new Page<>(current,limit);
+        QueryWrapper<TProject> wrapper = new QueryWrapper<>();
+        String title = projectQUery.getTitle();
+        Integer testType = projectQUery.getTestType();
+        String begin = projectQUery.getBegin();
+        String end = projectQUery.getEnd();
+
+        if(!StringUtils.isEmpty(title)){
+            wrapper.like("title",title);
+        }
+        if(!StringUtils.isEmpty(testType)){
+            wrapper.eq("test_type",testType);
+        }
+        if(!StringUtils.isEmpty(begin)){
+            wrapper.ge("gmt_create",begin);
+        }
+        if(!StringUtils.isEmpty(end)){
+            wrapper.le("gmt_create",end);
+        }
+
+        IPage<TProject> listPage = tProjectService.page(page, wrapper);
+        List<TProject> records = listPage.getRecords();
+        long pages = listPage.getPages();
+        long cut = listPage.getCurrent();
+        long total = listPage.getTotal();
+        return R.ok().data("total",total).data("current",cut).data("pages",pages).data("rows",records);
+    }
+}
 

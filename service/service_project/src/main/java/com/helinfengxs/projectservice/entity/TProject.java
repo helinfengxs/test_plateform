@@ -35,7 +35,7 @@ public class TProject implements Serializable {
     @ApiModelProperty(value = "项目名称")
     private String title;
 
-    @ApiModelProperty(value = "测试类型")
+    @ApiModelProperty(value = "测试类型:1-接口测试,2-webui测试,3-app测试,4-性能测试")
     private Integer testType;
 
     @ApiModelProperty(value = "创建时间")
