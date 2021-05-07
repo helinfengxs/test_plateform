@@ -135,6 +135,11 @@ public class TProjectController {
         return R.ok().data("total",total).data("current",cut).data("pages",pages).data("rows",records);
     }
 
+    /**
+     * 添加项目
+     * @param tProject 项目实体类
+     * @return 添加成功与失败信息
+     */
     @ApiOperation("添加项目接口")
     @PostMapping("addProject")
     public R addProject(@RequestBody(required = true) TProject tProject){
