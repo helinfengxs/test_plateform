@@ -4,10 +4,7 @@ package com.helinfenxs.projectservice.controller;
 import com.helinfenxs.projectservice.entity.TProject;
 import com.helinfenxs.projectservice.service.TProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,7 +17,7 @@ import java.util.List;
  * @since 2021-05-06
  */
 @RestController
-@RequestMapping("/projectservice/t-project")
+@RequestMapping("/projectservice/")
 public class TProjectController {
 
     @Autowired
@@ -30,6 +27,11 @@ public class TProjectController {
     public List<TProject> findAll(){
         List<TProject> list = tProjectService.list(null);
         return list;
+    }
+    @DeleteMapping("{id}")
+    public boolean removeId(@PathVariable String id){
+        boolean status = tProjectService.removeById(id);
+        return status;
     }
 }
 

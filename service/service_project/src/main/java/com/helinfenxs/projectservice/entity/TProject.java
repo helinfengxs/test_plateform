@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -43,6 +45,7 @@ public class TProject implements Serializable {
     private Date gmtModified;
 
     @ApiModelProperty(value = "是否删除，0未删除，1删除")
+    @TableLogic
     private Integer staus;
     @ApiModelProperty(value = "备注信息")
     private String describtion;
