@@ -134,5 +134,15 @@ public class TProjectController {
         long total = listPage.getTotal();
         return R.ok().data("total",total).data("current",cut).data("pages",pages).data("rows",records);
     }
+
+    @ApiOperation("添加项目接口")
+    @PostMapping("addProject")
+    public R addProject(@RequestBody(required = true) TProject tProject){
+        boolean save = tProjectService.save(tProject);
+        if(!save){
+            return  R.error().message("添加失败");
+        }
+        return R.ok().message("添加成功");
+    }
 }
 
