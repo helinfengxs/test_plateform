@@ -41,7 +41,8 @@ public class TProjectController {
     @GetMapping("findAll")
     @ApiOperation(value = "查询所有项目列表")
     public R findAll(){
-        List<TProject> list = tProjectService.list(null);
+        List<TProject> list  = tProjectService.findAll();
+
         return R.ok().data("items",list);
     }
 
@@ -53,10 +54,7 @@ public class TProjectController {
     @DeleteMapping("{id}")
     @ApiOperation(value = "根据项目Id删除项目")
     public R removeId(@ApiParam(name = "id",value = "项目管理id",required = true) @PathVariable String id){
-        boolean flag = tProjectService.removeById(id);
-        if (!flag){
-            return R.error();
-        }
+        tProjectService.removeId(id);
         return R.ok();
     }
 
@@ -74,17 +72,8 @@ public class TProjectController {
             @ApiParam(name = "limit",value = "当前页面展示数",required = true)
             @PathVariable long limit
     ){
-
-        Page<TProject> page = new Page<>(current,limit);
-        IPage<TProject> listProject = tProjectService.page(page, null);
-        long total = listProject.getTotal();
-        long cut = listProject.getCurrent();
-        long pages = listProject.getPages();
-        List<TProject> records = listProject.getRecords();
-
-        return R.ok().data("total",total).data("current",cut).data("pages",pages).data("rows",records);
-
-
+        HashMap<String,Object> hashMap = tProjectService.pageListProject(current,limit);
+        return R.ok().data(hashMap);
     }
 
     /**
@@ -108,32 +97,9 @@ public class TProjectController {
                 }))
             @RequestBody(required = false) ProjectQUery projectQUery
     ){
-        Page<TProject> page = new Page<>(current,limit);
-        QueryWrapper<TProject> wrapper = new QueryWrapper<>();
-        String title = projectQUery.getTitle();
-        Integer testType = projectQUery.getTestType();
-        String begin = projectQUery.getBegin();
-        String end = projectQUery.getEnd();
+        HashMap<String,Object> hashMap = tProjectService.pageProjectCondition(current,limit,projectQUery);
 
-        if(!StringUtils.isEmpty(title)){
-            wrapper.like("title",title);
-        }
-        if(!StringUtils.isEmpty(testType)){
-            wrapper.eq("test_type",testType);
-        }
-        if(!StringUtils.isEmpty(begin)){
-            wrapper.ge("gmt_create",begin);
-        }
-        if(!StringUtils.isEmpty(end)){
-            wrapper.le("gmt_create",end);
-        }
-
-        IPage<TProject> listPage = tProjectService.page(page, wrapper);
-        List<TProject> records = listPage.getRecords();
-        long pages = listPage.getPages();
-        long cut = listPage.getCurrent();
-        long total = listPage.getTotal();
-        return R.ok().data("total",total).data("current",cut).data("pages",pages).data("rows",records);
+        return R.ok().data(hashMap);
     }
 
     /**
@@ -144,10 +110,7 @@ public class TProjectController {
     @ApiOperation("添加项目接口")
     @PostMapping("addProject")
     public R addProject(@RequestBody(required = true) TProject tProject){
-        boolean save = tProjectService.save(tProject);
-        if(!save){
-            return  R.error().message("添加失败");
-        }
+        tProjectService.addProject(tProject);
         return R.ok().message("添加成功");
     }
 
@@ -159,9 +122,8 @@ public class TProjectController {
     @ApiOperation("根据项目id查询项目信息")
     @GetMapping("getProject/{id}")
     public R getProjectById(@ApiParam(name = "id",value = "项目id",required = true) @PathVariable String id){
-
-        TProject byId = tProjectService.getById(id);
-        return R.ok().data("item",byId);
+        TProject tp = tProjectService.getProjectById(id);
+        return R.ok().data("item",tp);
     }
 
     /**
@@ -172,10 +134,8 @@ public class TProjectController {
     @ApiOperation("更新项目信息")
     @PostMapping("updateProject")
     public R updateProject(@RequestBody TProject tProject){
-        boolean flag = tProjectService.updateById(tProject);
-        if(!flag){
-            return  R.error().message("更新失败");
-        }
+        tProjectService.updateProject(tProject);
+
         return R.ok().message("更新成功");
     }
 }
