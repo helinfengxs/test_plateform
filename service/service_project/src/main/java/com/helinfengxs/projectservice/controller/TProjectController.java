@@ -29,6 +29,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/projectservice/")
 @Api(description = "项目管理")
+@CrossOrigin
 public class TProjectController {
 
     @Autowired
@@ -66,7 +67,7 @@ public class TProjectController {
      * @param limit 当前页展示数
      * @return 查询后的分页数据
      */
-    @ApiOperation(value = "分页cha")
+    @ApiOperation(value = "分页查询")
     @GetMapping("pageProject/{current}/{limit}")
     public R pageListProject(
             @ApiParam(name = "current",value = "当前页",required = true)
