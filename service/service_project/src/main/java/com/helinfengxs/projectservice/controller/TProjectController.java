@@ -28,7 +28,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/projectservice/")
-@Api(description = "项目管理")
+@Api(description = "项目信息管理")
 @CrossOrigin
 public class TProjectController {
 
