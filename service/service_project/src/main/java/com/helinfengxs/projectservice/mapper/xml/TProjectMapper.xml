@@ -7,19 +7,24 @@
         from t_project as t
                  left join (select count(*)as interfaceCount,project_id from t_interface group by project_id )  as i on t.id = i.project_id
                  left join (select count(* ) as caseCount,project_id  from t_interface_case group by project_id) as c on t.id = c.project_id
-        <where>
-            <if test="p.title != null">
-                title like concat('%',#{p.title},'%')
 
-            </if>
-            <if test="p.testType != null">
-                and test_type = ${p.testType}
-            </if>
-            <if test="p.begin != null">
-                and gmt_create &gt;#{p.begin}
-            </if>
-            <if test="p.end">
-                and gmt_modified &lt;#{p.end}
+
+
+        <where>
+            <if test="p != null">
+                <if test="p.title != null">
+                    title like concat('%',#{p.title},'%')
+
+                </if>
+                <if test="p.testType != null">
+                    and test_type = ${p.testType}
+                </if>
+                <if test="p.begin != null">
+                    and gmt_create &gt;#{p.begin}
+                </if>
+                <if test="p.end">
+                    and gmt_modified &lt;#{p.end}
+                </if>
             </if>
             and status = 0
         </where>

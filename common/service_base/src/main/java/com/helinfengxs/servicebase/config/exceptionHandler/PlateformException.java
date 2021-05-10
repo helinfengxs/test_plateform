@@ -12,6 +12,12 @@ public class PlateformException extends RuntimeException{
     private Integer code;
     //自定义异常信息
     private String msg;
-
+    @Override
+    public String toString() {
+        return "GuliException{" +
+                "message=" + this.getMessage() +
+                ", code=" + code +
+                '}';
+    }
 
 }

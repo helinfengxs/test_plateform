@@ -89,23 +89,26 @@ public class TProjectServiceImpl extends ServiceImpl<TProjectMapper, TProject> i
         Page<TProject> page = new Page<>(current,limit);
         QueryWrapper<TProject> wrapper = new QueryWrapper<>();
         try {
-            String title = projectQUery.getTitle();
-            Integer testType = projectQUery.getTestType();
-            String begin = projectQUery.getBegin();
-            String end = projectQUery.getEnd();
+            if(projectQUery != null){
+                String title = projectQUery.getTitle();
+                Integer testType = projectQUery.getTestType();
+                String begin = projectQUery.getBegin();
+                String end = projectQUery.getEnd();
 
-            if(!StringUtils.isEmpty(title)){
-                wrapper.like("title",title);
+                if(!StringUtils.isEmpty(title)){
+                    wrapper.like("title",title);
+                }
+                if(!StringUtils.isEmpty(testType)){
+                    wrapper.eq("test_type",testType);
+                }
+                if(!StringUtils.isEmpty(begin)){
+                    wrapper.ge("gmt_create",begin);
+                }
+                if(!StringUtils.isEmpty(end)){
+                    wrapper.le("gmt_create",end);
+                }
             }
-            if(!StringUtils.isEmpty(testType)){
-                wrapper.eq("test_type",testType);
-            }
-            if(!StringUtils.isEmpty(begin)){
-                wrapper.ge("gmt_create",begin);
-            }
-            if(!StringUtils.isEmpty(end)){
-                wrapper.le("gmt_create",end);
-            }
+
             wrapper.orderByDesc("gmt_create");
             IPage<TProject> listPage = baseMapper.selectPage(page, wrapper);
             hashMap.put("total",listPage.getTotal());

@@ -1,5 +1,6 @@
 package com.helinfengxs.servicebase.config.exceptionHandler;
 
+import com.helinfengxs.commonutils.ExceptionUtil;
 import com.helinfengxs.commonutils.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -34,9 +35,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(PlateformException.class)
     @ResponseBody
     public R error(PlateformException e){
-        log.error(e.getMsg());
+        log.error(ExceptionUtil.getMessage(e));
         e.printStackTrace();
         return R.error().code(e.getCode()).message(e.getMsg());
     }
+
 
 }
