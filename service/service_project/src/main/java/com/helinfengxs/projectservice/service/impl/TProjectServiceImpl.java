@@ -7,6 +7,7 @@ import com.helinfengxs.projectservice.entity.TProject;
 import com.helinfengxs.projectservice.mapper.TProjectMapper;
 import com.helinfengxs.projectservice.service.TProjectService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.helinfengxs.projectservice.vo.ProjectList;
 import com.helinfengxs.projectservice.vo.ProjectQUery;
 import com.helinfengxs.servicebase.config.exceptionHandler.PlateformException;
 import org.springframework.stereotype.Service;
@@ -159,5 +160,30 @@ public class TProjectServiceImpl extends ServiceImpl<TProjectMapper, TProject> i
         if(flag < 0){
             throw  new PlateformException(20001,"更新项目异常");
         }
+    }
+
+    /**
+     * 条件分页查询项目信息，并统计关联接口总数和用例总数接口实现
+     * @param current 当前页
+     * @param limit 当前页展示数
+     * @param projectQUery 查询条件方法
+     * @return 查询数据《hashmap》
+     */
+    @Override
+    public HashMap<String,Object> pageProject(long current,long limit,ProjectQUery projectQUery) {
+        HashMap<String,Object> hashMap = new HashMap<>();
+        Page<ProjectList> page = new Page<>(current,limit);
+        IPage<ProjectList> projectListIPage = baseMapper.pageProject(page,projectQUery);
+
+        List<ProjectList> records = projectListIPage.getRecords();
+        long total = projectListIPage.getTotal();
+        long cut = projectListIPage.getCurrent();
+        long pages = projectListIPage.getPages();
+        hashMap.put("total",total);
+        hashMap.put("current",cut);
+        hashMap.put("pages",pages);
+        hashMap.put("items",records);
+
+        return hashMap;
     }
 }

@@ -2,6 +2,7 @@ package com.helinfengxs.projectservice.service;
 
 import com.helinfengxs.projectservice.entity.TProject;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.helinfengxs.projectservice.vo.ProjectList;
 import com.helinfengxs.projectservice.vo.ProjectQUery;
 
 import java.util.HashMap;
@@ -63,4 +64,14 @@ public interface TProjectService extends IService<TProject> {
      * @param tProject 项目信息
      */
     void updateProject(TProject tProject);
+
+    /**
+     * 条件分页查询项目信息，并统计关联接口总数和用例总数接口
+     * @param current 当前页
+     * @param limit 当前页展示数
+     * @param projectQUery 查询条件方法
+     * @return 查询数据《hashmap》
+     */
+    HashMap<String,Object> pageProject(long current,long limit,ProjectQUery projectQUery);
+
 }

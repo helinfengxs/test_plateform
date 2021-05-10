@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.helinfengxs.commonutils.R;
 import com.helinfengxs.projectservice.entity.TProject;
 import com.helinfengxs.projectservice.service.TProjectService;
+import com.helinfengxs.projectservice.vo.ProjectList;
 import com.helinfengxs.projectservice.vo.ProjectQUery;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -134,10 +135,27 @@ public class TProjectController {
      */
     @ApiOperation("更新项目信息")
     @PostMapping("updateProject")
-    public R updateProject(@RequestBody TProject tProject){
+    public R updateProject(@ApiParam(name = "tProject",value = "项目信息",required = true)@RequestBody TProject tProject){
         tProjectService.updateProject(tProject);
 
         return R.ok().message("更新成功");
+    }
+
+    /**
+     * 条件分页查询项目信息，并统计关联接口总数和用例总数接口
+     * @param current 当前页
+     * @param limit 当前页展示数
+     * @param projectQUery 查询条件对象
+     * @return 查询数据《hashmap》
+     */
+    @ApiOperation("条件分页查询项目信息，并统计关联接口总数和用例总数")
+    @PostMapping("pageProject/{current}/{limit}")
+    public  R pageProject(
+            @ApiParam(name = "current",value = "当前页",defaultValue = "1",required = true)@PathVariable long current,
+            @ApiParam(name = "limit",value = "当前页展示数",defaultValue = "10",required = true)@PathVariable long limit,
+            @ApiParam(name = "projectQUery",value = "查询条件")@RequestBody(required = false) ProjectQUery projectQUery){
+        HashMap<String,Object> hashMap = tProjectService.pageProject(current,limit,projectQUery);
+        return R.ok().data(hashMap);
     }
 }
 
