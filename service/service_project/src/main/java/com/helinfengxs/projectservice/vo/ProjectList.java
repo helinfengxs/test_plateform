@@ -29,7 +29,8 @@ public class ProjectList {
     private Date gmtModified;
 
     @ApiModelProperty(value = "是否删除，0未删除，1删除")
-    @TableLogic
+    @TableLogic(value = "0",delval = "1")
+    @TableField(select = false)
     private Integer status;
     @ApiModelProperty(value = "备注信息")
     private String describtion;
