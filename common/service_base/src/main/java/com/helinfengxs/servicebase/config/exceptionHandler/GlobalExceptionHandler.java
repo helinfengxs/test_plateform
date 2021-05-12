@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public R error(Exception e){
 
-        log.error(e.getMessage());
+        log.error(ExceptionUtil.getMessage(e));
 
         e.printStackTrace();
         return R.error().message("服务器处理异常");

@@ -11,10 +11,13 @@ import com.helinfengxs.projectservice.vo.ProjectList;
 import com.helinfengxs.projectservice.vo.ProjectQUery;
 import com.helinfengxs.servicebase.config.exceptionHandler.PlateformException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * <p>
@@ -130,6 +133,24 @@ public class TProjectServiceImpl extends ServiceImpl<TProjectMapper, TProject> i
      */
     @Override
     public void addProject(TProject tProject) {
+
+        if(!StringUtils.isEmpty(tProject.getTitle())){
+            String title = tProject.getTitle().trim();
+            tProject.setTitle(title);
+        }else {
+            throw new PlateformException(20001,"项目名称未填入");
+        }
+        if(StringUtils.isEmpty(tProject.getTestType())){
+            throw new PlateformException(2001,"测试类型未填入");
+        }
+        if(!StringUtils.isEmpty(tProject.getDescribtion())){
+            String describtion = tProject.getDescribtion().trim();
+            tProject.setDescribtion(describtion);
+        }
+
+
+
+
         int insert = baseMapper.insert(tProject);
         if(insert < 0){
             throw new PlateformException(20001,"添加项目异常");
@@ -188,5 +209,33 @@ public class TProjectServiceImpl extends ServiceImpl<TProjectMapper, TProject> i
         hashMap.put("items",records);
 
         return hashMap;
+    }
+
+    /**
+     * 实现根据项目名称查询项目是否存在接口
+     * @param tiltle 项目名称
+     */
+    @Override
+    public void findProjectByTitle(String tiltle) {
+        String trim = tiltle.trim();
+        TProject tProject = new TProject();
+
+        tProject.setTitle(tiltle);
+        QueryWrapper<TProject> wrapper = new QueryWrapper<>();
+        wrapper.eq("title",trim);
+        List<TProject> selectList = baseMapper.selectList(wrapper);
+
+        if (selectList.size() > 0) {
+            throw new PlateformException(20001,"项目名称重复");
+        }
+    }
+
+    @Override
+    @Transactional
+    public void deletePartProject(List<String> ids) {
+        int deleteBatchIds = baseMapper.deleteBatchIds(ids);
+        if (deleteBatchIds <0){
+            throw new PlateformException(20001,"删除项目失败");
+        }
     }
 }

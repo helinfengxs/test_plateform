@@ -14,8 +14,8 @@ public class PlateformException extends RuntimeException{
     private String msg;
     @Override
     public String toString() {
-        return "GuliException{" +
-                "message=" + this.getMessage() +
+        return "PlateformException{" +
+                "message=" + this.getMsg() +
                 ", code=" + code +
                 '}';
     }

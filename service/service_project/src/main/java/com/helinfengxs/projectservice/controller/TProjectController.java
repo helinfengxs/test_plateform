@@ -11,6 +11,7 @@ import com.helinfengxs.projectservice.vo.ProjectList;
 import com.helinfengxs.projectservice.vo.ProjectQUery;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -156,6 +157,24 @@ public class TProjectController {
             @ApiParam(name = "projectQUery",value = "查询条件")@RequestBody(required = false) ProjectQUery projectQUery){
         HashMap<String,Object> hashMap = tProjectService.pageProject(current,limit,projectQUery);
         return R.ok().data(hashMap);
+    }
+
+    /**
+     * 根据项目名称查询项目是否存在
+     * @param title 项目名称
+     * @return 返回查询结果
+     */
+    @ApiOperation("根据项目名称查询项目是否存在")
+    @GetMapping("findProjectByTitle")
+    public R findProjectByTitle(@ApiParam(name = "title",value = "项目名称",required = true) String title){
+        System.out.println(title);
+        tProjectService.findProjectByTitle(title);
+        return R.ok().message("项目不存在");
+    }
+    @DeleteMapping("deletePartProject")
+    public R deletePartProject(@RequestBody  List<String> ids){
+        tProjectService.deletePartProject(ids);
+        return R.ok().message("删除成功");
     }
 }
 

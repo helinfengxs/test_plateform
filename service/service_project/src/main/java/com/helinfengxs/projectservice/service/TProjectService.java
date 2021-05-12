@@ -74,4 +74,11 @@ public interface TProjectService extends IService<TProject> {
      */
     HashMap<String,Object> pageProject(long current,long limit,ProjectQUery projectQUery);
 
+    /**
+     * 根据项目名称查询项目是否存在接口
+     * @param tiltle 项目名称
+     */
+    void findProjectByTitle(String tiltle);
+
+    void deletePartProject(List<String> ids);
 }
