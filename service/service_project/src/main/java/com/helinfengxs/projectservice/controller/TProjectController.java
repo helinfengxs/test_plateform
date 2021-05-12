@@ -126,7 +126,7 @@ public class TProjectController {
     @GetMapping("getProject/{id}")
     public R getProjectById(@ApiParam(name = "id",value = "项目id",required = true) @PathVariable String id){
         TProject tp = tProjectService.getProjectById(id);
-        return R.ok().data("item",tp);
+        return R.ok().data("items",tp);
     }
 
     /**
@@ -167,7 +167,6 @@ public class TProjectController {
     @ApiOperation("根据项目名称查询项目是否存在")
     @GetMapping("findProjectByTitle")
     public R findProjectByTitle(@ApiParam(name = "title",value = "项目名称",required = true) String title){
-        System.out.println(title);
         tProjectService.findProjectByTitle(title);
         return R.ok().message("项目不存在");
     }

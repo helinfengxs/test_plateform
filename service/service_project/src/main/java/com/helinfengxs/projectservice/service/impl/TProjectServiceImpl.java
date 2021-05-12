@@ -94,7 +94,7 @@ public class TProjectServiceImpl extends ServiceImpl<TProjectMapper, TProject> i
         try {
             if(projectQUery != null){
                 String title = projectQUery.getTitle();
-                Integer testType = projectQUery.getTestType();
+                String testType = projectQUery.getTestType();
                 String begin = projectQUery.getBegin();
                 String end = projectQUery.getEnd();
 
@@ -180,7 +180,8 @@ public class TProjectServiceImpl extends ServiceImpl<TProjectMapper, TProject> i
      */
     @Override
     public void updateProject(TProject tProject) {
-        int flag = baseMapper.update(tProject, null);
+
+        int flag = baseMapper.updateById(tProject);
         if(flag < 0){
             throw  new PlateformException(20001,"更新项目异常");
         }

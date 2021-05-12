@@ -21,7 +21,7 @@ public class ProjectList {
     private String title;
 
     @ApiModelProperty(value = "测试类型:1-接口测试,2-webui测试,3-app测试,4-性能测试")
-    private Integer testType;
+    private String testType;
 
     @ApiModelProperty(value = "创建时间")
     private Date gmtCreate;
