@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.helinfengxs.projectservice.mapper.TInterfaceMapper">
+    <select id="pageInterface" resultType="com.helinfengxs.projectservice.vo.InterfaceList">
+        select
+               i.id,i.interface_name as interfaceName,i.interface_address as interfaceAddress,i.gmt_create as gmtCreate,i.gmt_modified as gmtModified,p.title as projectName,i.project_id as projectId,count(c.interface_id) as interfaceCases
+        from t_interface as i
+            left join t_project as p on i.project_id = p.id
+            left join t_interface_case as c on i.id = c.interface_id
+        <where>
+            <if test="i != null">
+                <if test="i.intserfaceName != null">
+                    interface_name like concat('%',#{i.intserfaceName},'%')
 
+                </if>
+                <if test="i.projectId != null">
+                    and project_id = ${i.projectId}
+                </if>
+                <if test="i.begin != null">
+                    and gmt_create &gt;#{i.begin}
+                </if>
+                <if test="i.end">
+                    and gmt_modified &lt;#{i.end}
+                </if>
+            </if>
+            and i.status = 0
+        </where>
+        group by c.interface_id
+        order by i.gmt_create desc
+    </select>
 </mapper>

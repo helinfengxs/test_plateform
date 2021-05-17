@@ -7,6 +7,7 @@ import com.helinfengxs.projectservice.entity.TInterface;
 import com.helinfengxs.projectservice.mapper.TInterfaceMapper;
 import com.helinfengxs.projectservice.service.TInterfaceService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.helinfengxs.projectservice.vo.InterfaceList;
 import com.helinfengxs.projectservice.vo.InterfacePageQuery;
 import com.helinfengxs.servicebase.config.exceptionHandler.PlateformException;
 import org.springframework.stereotype.Service;
@@ -37,34 +38,14 @@ public class TInterfaceServiceImpl extends ServiceImpl<TInterfaceMapper, TInterf
     @Override
     public HashMap<String, Object> pageInterface(long current, long limit, InterfacePageQuery interfacePageQuery) {
         HashMap<String, Object> finalResult = new HashMap<>();
-        QueryWrapper<TInterface> wrapper = new QueryWrapper<>();
-        Page<TInterface> page = new Page<>(current,limit);
-        if (interfacePageQuery != null){
-            String intserfaceName = interfacePageQuery.getIntserfaceName();
-            String projectId = interfacePageQuery.getProjectId();
-            String begin = interfacePageQuery.getBegin();
-            String end = interfacePageQuery.getEnd();
-            if(!StringUtils.isEmpty(intserfaceName)){
-                wrapper.like("interface_name",intserfaceName);
-            }
-            if(!StringUtils.isEmpty(projectId)){
-                wrapper.eq("project_id",projectId);
-            }
-            if(!StringUtils.isEmpty(begin)){
-                wrapper.ge("gmt_create",begin);
-            }
-            if(!StringUtils.isEmpty(end)){
-                wrapper.le("gmt_create",end);
-            }
 
-        }
-        wrapper.orderByDesc("gmt_create");
-        IPage<TInterface> tInterfaceIPage = null;
-        try {
-            tInterfaceIPage = baseMapper.selectPage(page, wrapper);
-        }catch (Exception e){
-            throw new PlateformException(20001,"分页查询异常");
-        }
+        Page<InterfaceList> page = new Page<>(current,limit);
+        IPage<InterfaceList> tInterfaceIPage = null;
+//        try {
+             tInterfaceIPage = baseMapper.pageInterface(page, interfacePageQuery);
+//        }catch (Exception e){
+//            throw new PlateformException(20001,"分页查询异常");
+//        }
 
         finalResult.put("total",tInterfaceIPage.getTotal());
         finalResult.put("current",tInterfaceIPage.getCurrent());
