@@ -32,10 +32,10 @@ public class TInterface implements Serializable {
     private String id;
 
     @ApiModelProperty(value = "接口名称")
-    private String intserfaceName;
+    private String interfaceName;
 
     @ApiModelProperty(value = "接口地址")
-    private String insterfaceAddress;
+    private String interfaceAddress;
 
     @ApiModelProperty(value = "创建时间")
     @TableField(fill = FieldFill.INSERT)
