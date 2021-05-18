@@ -38,7 +38,7 @@ public class TProjectServiceImpl extends ServiceImpl<TProjectMapper, TProject> i
     @Override
     public List<TProject> findAll() {
         QueryWrapper<TProject> wrapper = new QueryWrapper<>();
-        wrapper.orderByDesc("gmt_create");
+        wrapper.orderByAsc("gmt_create");
         return baseMapper.selectList(wrapper);
     }
 
