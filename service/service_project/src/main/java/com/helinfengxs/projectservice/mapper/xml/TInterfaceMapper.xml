@@ -9,8 +9,8 @@
             left join t_interface_case as c on i.id = c.interface_id
         <where>
             <if test="i != null">
-                <if test="i.intserfaceName != null">
-                    interface_name like concat('%',#{i.intserfaceName},'%')
+                <if test="i.interfaceName != null">
+                    interface_name like concat('%',#{i.interfaceName},'%')
 
                 </if>
                 <if test="i.projectId != null">

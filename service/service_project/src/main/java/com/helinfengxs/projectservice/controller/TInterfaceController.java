@@ -43,7 +43,7 @@ public class TInterfaceController {
             @PathVariable long current,
             @PathVariable long limit,
             @RequestBody(required = false)  InterfacePageQuery interfacePageQuery ){
-
+        System.out.println(interfacePageQuery);
         HashMap<String,Object> hashMap =  tInterfaceService.pageInterface(current,limit,interfacePageQuery);
 
         return R.ok().data(hashMap);
