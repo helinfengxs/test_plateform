@@ -8,19 +8,19 @@
             left join t_project as p on i.project_id = p.id
             left join t_interface_case as c on i.id = c.interface_id
         <where>
-            <if test="i != null">
-                <if test="i.interfaceName != null">
-                    interface_name like concat('%',#{i.interfaceName},'%')
+            <if test="iter != null">
+                <if test="iter.interfaceName != null">
+                    i.interface_name like concat('%',#{iter.interfaceName},'%')
 
                 </if>
-                <if test="i.projectId != null">
-                    and project_id = ${i.projectId}
+                <if test="iter.projectId != null">
+                    and i.project_id = ${iter.projectId}
                 </if>
-                <if test="i.begin != null">
-                    and gmt_create &gt;#{i.begin}
+                <if test="iter.begin != null">
+                    and i.gmt_create &gt;#{iter.begin}
                 </if>
-                <if test="i.end">
-                    and gmt_modified &lt;#{i.end}
+                <if test="iter.end">
+                    and i.gmt_modified &lt;#{iter.end}
                 </if>
             </if>
             and i.status = 0

@@ -18,5 +18,5 @@ import org.apache.ibatis.annotations.Param;
  * @since 2021-05-16
  */
 public interface TInterfaceMapper extends BaseMapper<TInterface> {
-    IPage<InterfaceList> pageInterface(IPage<InterfaceList> page, @Param("i") InterfacePageQuery interfacePageQuery);
+    IPage<InterfaceList> pageInterface(IPage<InterfaceList> page, @Param("iter") InterfacePageQuery interfacePageQuery);
 }
