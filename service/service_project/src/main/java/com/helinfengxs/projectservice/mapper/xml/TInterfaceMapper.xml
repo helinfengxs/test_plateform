@@ -25,7 +25,7 @@
             </if>
             and i.status = 0
         </where>
-        group by c.interface_id
+        group by i.id
         order by i.gmt_create desc
     </select>
 </mapper>
